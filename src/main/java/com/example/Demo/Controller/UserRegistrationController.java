@@ -1,6 +1,7 @@
 package com.example.Demo.Controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.Demo.Dto.LoginDto;
 import com.example.Demo.Dto.ResponseDto;
 import com.example.Demo.Dto.UserRegistrationDto;
 import com.example.Demo.Model.UserRegistrationModel;
@@ -60,5 +62,19 @@ public class UserRegistrationController {
 		ResponseDto dto = service.UpdateUser(UserId, userdto);
 		return new ResponseEntity<ResponseDto>(dto,HttpStatus.OK);
 	}
+	
+	@PostMapping("/Login")
+	public ResponseEntity<ResponseDto> LoginUser(@RequestBody LoginDto logindto){
+		ResponseDto dto = service.loginValidation(logindto);
+		return new ResponseEntity<ResponseDto>(dto,HttpStatus.OK);
+	}
+	
+	@PostMapping("/VerifyLogin/{Token}")
+	public boolean LoginVerification(@PathVariable("Token") String Token){
+		boolean model = service.verifyUser(Token);
+		return model;
+	}
 }
+
+
 

@@ -1,9 +1,11 @@
 package com.example.Demo.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.example.Demo.Dto.LoginDto;
 import com.example.Demo.Dto.ResponseDto;
 import com.example.Demo.Dto.UserRegistrationDto;
 import com.example.Demo.Model.UserRegistrationModel;
@@ -16,4 +18,6 @@ public interface UserRegistrationServiceInterface {
 	List<UserRegistrationModel> GetAllUser();
 	ResponseDto DeletingUser(long UserId);
 	ResponseDto UpdateUser(long UserId, UserRegistrationDto userdto );
+	ResponseDto loginValidation(LoginDto logindto);
+	public Boolean verifyUser(String token);
 }
