@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 public class BookStoreModel {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int bookId;
 
 	@Column(name = "bookName")

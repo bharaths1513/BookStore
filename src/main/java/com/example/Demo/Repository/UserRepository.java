@@ -20,6 +20,7 @@ public interface UserRepository extends JpaRepository<UserRegistrationModel, Lon
 	@Query(value = "SELECT * FROM user_registration_data WHERE email_id= :emailId",nativeQuery = true)
 	Optional<UserRegistrationModel> findByEmailId(String emailId);
 
+
 //	void save(Optional<UserRegistrationModel> isPresent);
 
 	//void save(Optional<UserRegistrationModel> isPresent);

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Demo.Dto.LoginDto;
@@ -73,6 +74,12 @@ public class UserRegistrationController {
 	public boolean LoginVerification(@PathVariable("Token") String Token){
 		boolean model = service.verifyUser(Token);
 		return model;
+	}
+	
+	@PutMapping("/ForgetPassword/{EmailId}")
+	public ResponseEntity<ResponseDto> ForgetPassword(@PathVariable("EmailId") String EmailId,@RequestParam("Password") String Password){
+		ResponseDto dto = service.ForgotPassword(EmailId, Password);
+		return new ResponseEntity<ResponseDto>(dto,HttpStatus.OK);
 	}
 }
 

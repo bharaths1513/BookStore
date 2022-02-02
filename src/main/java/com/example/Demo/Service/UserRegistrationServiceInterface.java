@@ -20,4 +20,5 @@ public interface UserRegistrationServiceInterface {
 	ResponseDto UpdateUser(long UserId, UserRegistrationDto userdto );
 	ResponseDto loginValidation(LoginDto logindto);
 	public Boolean verifyUser(String token);
+	ResponseDto ForgotPassword(String EmailId,String NewPassword);
 }

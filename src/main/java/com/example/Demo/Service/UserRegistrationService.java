@@ -115,7 +115,21 @@ public class UserRegistrationService implements UserRegistrationServiceInterface
 			return false;
 		}
 	}
-	
+
+
+	@Override
+	public ResponseDto ForgotPassword(String EmailId,String NewPassword) {
+		Optional<UserRegistrationModel> user = userrepo.findByEmailId(EmailId);
+		if(user.isPresent()) {
+			user.get().setPassword(NewPassword);
+			userrepo.save(user.get());
+			return new ResponseDto("Password Set Successfully",user);
+		}else {
+			throw new UserRegistrationException("EmailId not Found");
+		}
+		
+	}
+
 	
 
 	
