@@ -13,6 +13,7 @@ import com.example.Demo.Dto.UserRegistrationDto;
 import com.example.Demo.Exception.UserRegistrationException;
 import com.example.Demo.Model.UserRegistrationModel;
 import com.example.Demo.Repository.UserRepository;
+import com.example.Demo.Util.Email;
 import com.example.Demo.Util.TokenUtil;
 
 @Service
@@ -27,18 +28,32 @@ public class UserRegistrationService implements UserRegistrationServiceInterface
 	@Autowired
 	private TokenUtil tokenutil;
 	
+	@Autowired
+	private Email email;
+
+	@Autowired
+	private EmailService mailService;
+	
 	
 	@Override
 	public ResponseDto CreateUserregistration(UserRegistrationDto userdto) {
-		Optional<UserRegistrationModel> isPresent = userrepo.findById(userdto.UserId);
+		Optional<UserRegistrationModel> isPresent = userrepo.findByEmailId(userdto.EmailId);
 		if(isPresent.isPresent()) {
 			System.out.println("User Already exist");
+			throw new UserRegistrationException("User Already Exists");
 		}else {
 			UserRegistrationModel model = modelmapper.map(userdto,UserRegistrationModel.class);
 			userrepo.save(model);
+			
+			email.setTo(model.getEmailId());
+			email.setFrom("bharath.bridgelabz@gmail.com");
+			email.setSubject("Welcome to Book store");
+			String token = tokenutil.createToken(model.getUserId());
+			email.setBody(mailService.getLink("http://localhost:8080/UserRegistration/VerifyLogin/" + token));
+			mailService.send(email.getTo(), email.getSubject(), email.getBody());			
 			return new ResponseDto("User Registration Successful",model);
 		}
-		return null;
+		
 	}
 
 

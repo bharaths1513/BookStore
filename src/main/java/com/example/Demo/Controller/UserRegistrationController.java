@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +26,7 @@ import com.example.Demo.Model.UserRegistrationModel;
 import com.example.Demo.Service.UserRegistrationServiceInterface;
 
 @RestController
+@CrossOrigin(allowedHeaders = "*", origins = "*")
 @RequestMapping("/UserRegistration")
 public class UserRegistrationController {
 
@@ -33,10 +35,8 @@ public class UserRegistrationController {
 	
 	@PostMapping("/Register")
 	public ResponseEntity<ResponseDto> AddUser(@Valid @RequestBody UserRegistrationDto userdto){
-		ResponseDto resdto = null;
-		resdto = service.CreateUserregistration(userdto);
-		ResponseDto DTO = new ResponseDto("User Registration Successfull",resdto);
-		return new ResponseEntity<ResponseDto>(DTO,HttpStatus.CREATED);
+		ResponseDto resdto = service.CreateUserregistration(userdto);
+		return new ResponseEntity<ResponseDto>(resdto,HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/GetUser/{UserId}")

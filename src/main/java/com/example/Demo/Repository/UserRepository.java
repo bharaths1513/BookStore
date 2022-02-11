@@ -13,12 +13,16 @@ import com.example.Demo.Model.UserRegistrationModel;
 @Repository
 public interface UserRepository extends JpaRepository<UserRegistrationModel, Long> {
 
+	
+	@Query(value = "SELECT * FROM user_registration_data WHERE email_id= :emailId",nativeQuery = true)
+	Optional<UserRegistrationModel> findByEmailId(String emailId);
+
 	//Optional<UserRegistrationModel> findByEmailId(String emailId);
 
 	
 	//Optional<UserRegistrationModel> findByEmailId(String emailId);
-	@Query(value = "SELECT * FROM user_registration_data WHERE email_id= :emailId",nativeQuery = true)
-	Optional<UserRegistrationModel> findByEmailId(String emailId);
+//	
+//	Optional<UserRegistrationModel> findByEmailId(String emailId);
 
 
 //	void save(Optional<UserRegistrationModel> isPresent);
